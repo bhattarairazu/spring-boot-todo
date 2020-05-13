@@ -1,0 +1,34 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="refresh" content="10">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<title>Add Task</title>
+
+</head>
+	<body>
+		<div class="container">
+			<h3>Task</h3>
+			<hr>
+			<p class="h4 mb-4">Add Task</p>
+			<form action="#" th:action="@{/board/saveTask}" th:object="${task}" method="POST">
+			<!--Add hidden form field to handle update-->
+			<input type="hidden" th:field="*{id}" />
+				<input type="text" th:field="*{description}" class="form-control mb-4 col-4"  placeholder="Description">
+				<input type="text" th:field="*{type}" class="form-control mb-4 col-4"  placeholder="Task Type">
+				<input type="hidden" th:field="*{boards}" >
+				
+				<button type="submit" class="btn btn-info col-3">Save</button>
+			</form>
+			<hr>
+			<a th:href="@{/board/listtask}">Back to Task List</a>
+		</div>
+	</body>
+</html>

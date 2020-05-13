@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="refresh" content="10">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<title>Add Task</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+	<body>
+		<div class="container">
+			<div class="mb-3"></div>
+			<div class="card">
+			  <h5 class="card-header" th:text="${taskdetail.description}"></h5>
+			  <div class="card-body">
+			    <p class="card-text" th:text="${taskdetail.description}" ></p>
+			    	<div sec:authorize="hasRole('ROLE_ADMIN')">
+			    		<a href="#" class="btn btn-outline-dark">Edit Description</a>
+			    	</div>
+			    
+			    <hr>
+			    <h5 class="card-title">SubTask-List</h5>
+			   	<div sec:authorize="hasRole('ROLE_ADMIN')">
+			    	
+			   			 <a th:href="@{/task/addsubtask(taskid=${taskdetail.id})}" class="btn btn-outline-dark mb-5">Add Subtask</a>
+			   			 
+			    </div>
+					<div th:each="subtask:${subtasks}">
+						<div class="text-center">
+							<div class="card border-info mb-3" style="max-width: 25rem;align:center;">
+								<div th:switch="${subtask.status}">
+								
+									  <div class="card-body text-info">
+									  		<p th:case="'COMPLETE'" class="card-text"><strike th:text="${subtask.title}"></strike></p>
+									   		
+									   		<p th:case="'INCOMPLETE'" class="card-text" th:text="${subtask.title}"></p>
+									   			
+									  </div>
+									 
+								 </div>
+								
+								 <div class="row">
+									<div sec:authorize="hasRole('ROLE_ADMIN')">
+					    	
+											<div class="col-sm-1 mb-2">
+												<a th:href="@{/task/editSubTask(subtaskid=${subtask.id})}"><i class="material-icons md-36">edit</i></a>
+											</div>
+											<div class="col-sm-1 mb-2">
+												<a th:href="@{/task/deleteSubtask(subtaskid=${subtask.id},taskid=${taskdetail.id})}"><i class="material-icons md-36">close</i></a>
+											</div>
+									</div>
+									<div class="col-sm-1 mb-2">
+										<a th:href="@{/task/ChangeSubtaskStatus(subtaskid=${subtask.id},taskid=${taskdetail.id})}"><i class="material-icons md-36">done</i></a>
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<hr>
+			    	<h5 class="card-title">Comments</h5>
+			    	<a th:href="@{/task/showAddComment(taskid=${taskdetail.id})}" class="btn btn-outline-dark mb-2">Add Comment</a>
+			    			<ul class="list-unstyled">
+  								<div th:each="singlecomment:${comments}">
+  								<li class="media">
+    							  <img src="https://res.cloudinary.com/demo/image/upload/w_400,h_400,c_crop,g_face,r_max/w_200/lady.jpg" class="mr-3" alt="..." width="5%" height="2%"> 
+                                    <div class="media-body">
+                                     <h5 class="mt-0 mb-1" th:text="${singlecomment.user_id}"></h5>
+                                      <p th:text="${singlecomment.comment}"></P>
+                                     </div>
+                                     
+                                 </li>
+                                 </div>
+                                 
+                                 
+                              </ul>
+			    	
+			    	
+			    
+			  </div>
+			</div>
+		</div>
+	</body>
+</html>

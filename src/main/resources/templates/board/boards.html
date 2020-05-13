@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Boards</title>
+	<meta http-equiv="refresh" content="10">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+</head>
+<body>
+		<div class="container">
+		<div class="d-flex bd-highlight">
+		  <div class="p-2 flex-grow-1 bd-highlight"><h3>Boards</h3></div>
+		 <div class="p-2 bd-highlight"> Username:<span sec:authentication="name">:</span></div>
+		   <div class="p-2 bd-highlight">Roles:<span sec:authentication="principal.authorities"></span></div>
+		  <div class="p-2 bd-highlight">
+		  
+		  <!-- Add a logout button -->
+			<form th:action="@{/logout}" 
+					   method="POST">
+			
+				<input type="submit" class="btn btn-outline-dark" value="Logout" />
+			
+			</form>	
+			
+		  </div>
+		</div>
+		
+		<hr>
+		 
+		 	<div class="row">
+		 	
+				 <div sec:authorize="hasRole('ROLE_ADMIN')">
+				 	<div class="col-md-12">
+				 	<div class="card border-info mb-3" style="max-width: 15rem;">
+					  
+					  <div class="card-body text-info">
+					    <h5 class="card-title" ><a th:href="@{/board/addboard}">Add Boards	</a></h5>
+					    <p class="card-text">Add boards and task</p>
+					  </div>
+					</div>
+					</div>
+				</div>
+		 	
+		 	<div th:each="theBoards:${boards}">
+		 		<div class="col-md-12">
+				<div class="card text-white bg-dark mb-3" style="max-width: 15rem;">
+				
+				<div class="card-body">
+					<a th:href="@{/board/listtask(boardid=${theBoards.id})}"><h5 class="card-title" th:text="${theBoards.name}"></h5></a>
+					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+					
+					<div sec:authorize="hasRole('ROLE_ADMIN')">
+						
+							<div class="row">
+								<div class="col-sm-2">
+									<a th:href="@{/board/editBoard(boardid=${theBoards.id})}"><i class="material-icons md-36">edit</i></a>
+								</div>
+								<div class="col-sm-2">
+									<a th:href="@{/board/delete(boardid=${theBoards.id})}"><i class="material-icons md-36">close</i></a>
+								</div>
+							</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			</div>
+			</div>
+		
+		
+		
+		</div>
+
+
+</body>
+</html>

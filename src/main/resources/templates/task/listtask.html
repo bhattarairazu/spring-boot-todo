@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	<title>Boards</title>
+	<meta http-equiv="refresh" content="10">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+</head>
+<body>
+	<div class="container">
+		<h2></h2>
+		<div class="row">
+		 	
+		    <div class="col-sm">
+		      <div class="col-md-15">
+					 	<div class="card bg-light mb-3" style="max-width: 25rem;">
+						  <div class="card-header">TO-Do</div>
+							  <div class="card-body">
+							  <div sec:authorize="hasRole('ROLE_ADMIN')">
+							  	<button type="button" class="btn btn-primary mb-3" ><a th:href="@{/board/addTaskForm(boardid=${boardId})}" >Add Task</a></button>
+							  </div>
+							    	<div th:each="theTask:${tasks}">
+							    		<div class="card border-info mb-3" style="max-width: 18rem;">
+											 
+											  <div class="card-body text-info">
+											   <a th:href="@{/task/taskdetails(taskid=${theTask.id})}"><h5 class="card-title" style="text-align: center;" th:text="${theTask.description}"></h5></a>
+											    
+											  </div>
+											</div>
+									</div>
+											
+							  </div>
+						</div>
+						</div>
+		    </div>
+		    
+		    
+		    
+		    <div class="col-sm">
+		    			<div class="col-md-15">
+					 	<div class="card bg-light mb-3" style="max-width: 25rem;">
+						  
+							 <div class="card-header">Doing</div>
+							  <div class="card-body">
+							    <div th:each="progressTask:${inprogresstask}">
+							    		<div class="card border-success mb-3" style="max-width: 18rem;">
+											 
+											  <div class="card-body text-success">
+											    <h5 class="card-title" style="text-align: center;" th:text="${progressTask.description}"></h5>
+											    
+											  </div>
+											</div>
+									</div>
+
+
+							  </div>
+						</div>
+						</div>
+		    </div>
+		    
+		    
+		    <div class="col-sm">
+		         <div class="col-md-15">
+					 	<div class="card bg-light mb-3" style="max-width: 25rem;">
+						  <div class="card-header">Completed</div>
+							  <div class="card-body">
+								   <div th:each="completedTask:${completedtask}">
+								    		<div class="card border-danger mb-3" style="max-width: 18rem;">
+												 
+												  <div class="card-body text-danger">
+												    <strike><h5 class="card-title" style="text-align: center;" th:text="${completedTask.description}"></h5></strike>
+												    
+												  </div>
+												</div>
+										</div>
+							   
+							   
+							   
+							  </div> 
+						 
+						</div>
+				 </div>
+		    </div>
+		    
+		    
+  </div>
+</div>
+
+
+</body>
+</html>
